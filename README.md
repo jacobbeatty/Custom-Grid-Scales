@@ -3,3 +3,7 @@ This add-on adds the ability to create a custom set of grid scales in the Viewpo
 This is very useful when sticking to increments across software as it allows you to set a custom list of the same increments you use in other software like Unreal Engine.
 
 The default keys are the bracket keys with [ moving down the list of custom grid scales, and ] moving up the list. These can be changed in the keymap preferences.
+
+
+https://github.com/user-attachments/assets/33390155-76db-48d0-a0ae-c761081bd22c
+
