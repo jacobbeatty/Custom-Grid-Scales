@@ -1,0 +1,11 @@
+schema_version = "1.0.0"
+id = "Custom-Grid-Scales"
+version = "1.0.0"
+name = "Custom Grid Scales"
+tagline = "Adds the ability to quickly changes between grid scales, similar to Maya and Unreal Engine."
+maintainer = "Jacob Beatty"
+type = "add-on"
+blender_version_min = "4.2.1"
+license = [
+  "SPDX:GPL-3.0-or-later",
+]
