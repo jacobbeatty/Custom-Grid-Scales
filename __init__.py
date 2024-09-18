@@ -1,6 +1,6 @@
 bl_info = {
     "name": "Custom Grid Scales",
-    "blender": (4, 0, 2),
+    "blender": (4, 2, 1),
     "category": "3D View",
 }
 
