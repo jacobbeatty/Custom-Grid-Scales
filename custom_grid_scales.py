@@ -34,13 +34,6 @@ class GridScaleProperties(bpy.types.PropertyGroup):
         max=100.0
     )
 
-def initialize_default_scales(scene):
-    props = scene.grid_scale_properties
-    if not props.grid_scales:
-        for scale in [0.125, 0.25, 0.5 , 1.0, 2.0, 4.0]:
-            new_scale = props.grid_scales.add()
-            new_scale.scale = scale
-
 # Function to update the grid scale and show a message in the status bar
 def update_grid_scale(self, context):
     props = context.scene.grid_scale_properties
@@ -99,12 +92,12 @@ class VIEW3D_OT_remove_grid_scale(bpy.types.Operator):
             if props.grid_scales:
                 update_grid_scale(self, context)
         return {'FINISHED'}
-
+        
 # Extend the Viewport Overlays panel
 class VIEW3D_PT_overlay_grid_scale(bpy.types.Panel):
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'HEADER'
-    bl_label = "Grid Scale Toggler"
+    bl_label = "Grid Scale List"
     bl_parent_id = 'VIEW3D_PT_overlay'
     bl_options = {'DEFAULT_CLOSED'}
 
@@ -112,27 +105,13 @@ class VIEW3D_PT_overlay_grid_scale(bpy.types.Panel):
         layout = self.layout
         props = context.scene.grid_scale_properties
         
-        # Add a description below the panel header
-        layout.label(text="Manage grid scale increments\nfor the viewport grid.")
-        layout.label(text="Use the buttons to add, remove,\nor cycle through scales.")
-        
-        # Add a separator to create space
-        layout.separator()
-
-        # Add a description for the grid scale list
-        layout.label(text="Grid Scale List:")
-        
         for i, scale_item in enumerate(props.grid_scales):
             row = layout.row(align=True)
             row.prop(scale_item, "scale", text="")
             op = row.operator("view3d.remove_grid_scale", text="", icon="REMOVE")
             op.index = i
-        
-        # Add a separator to separate the list from the custom scale controls
-        layout.separator()
 
-        # Add controls for custom scale
-        layout.label(text="Add Custom Grid Scale:")
+#        # Add controls for custom scale
         row = layout.row(align=True)
         row.prop(props, "custom_scale", text="")
         row.operator("view3d.add_custom_grid_scale", text="Add")
@@ -153,9 +132,6 @@ def register():
     for cls in classes:
         bpy.utils.register_class(cls)
     bpy.types.Scene.grid_scale_properties = bpy.props.PointerProperty(type=GridScaleProperties)
-    
-    # Initialize default scales
-    bpy.app.handlers.load_post.append(initialize_default_scales)
     
     # Add keymap entries for the bracket keys
     wm = bpy.context.window_manager
@@ -178,11 +154,6 @@ def unregister():
     for cls in classes:
         bpy.utils.unregister_class(cls)
     del bpy.types.Scene.grid_scale_properties
-    
-    # Remove the handler
-    if bpy.app.handlers.load_post.count(initialize_default_scales):
-        bpy.app.handlers.load_post.remove(initialize_default_scales)
 
 if __name__ == "__main__":
     register()
-
